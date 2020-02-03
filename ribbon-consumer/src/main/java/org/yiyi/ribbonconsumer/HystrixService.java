@@ -33,25 +33,29 @@
  */
 package org.yiyi.ribbonconsumer;
 
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 /**
  * @author yi.yi
- * @date 2020.01.07
+ * @date 2020.02.03
  */
-@RestController
-public class ConsumerController
+@Service
+public class HystrixService
 {
     @Autowired
-    private HystrixService hystrixService;
+    private RestTemplate restTemplate;
 
-    @RequestMapping(value = "/sayHello", method = RequestMethod.GET)
+    @HystrixCommand(fallbackMethod = "helloError")
     public String sayHello ()
     {
-        return hystrixService.sayHello ();
+        return restTemplate.getForEntity ("http://hello-service/hello", String.class).getBody ();
+    }
+
+    public String helloError ()
+    {
+        return "helloError";
     }
 }

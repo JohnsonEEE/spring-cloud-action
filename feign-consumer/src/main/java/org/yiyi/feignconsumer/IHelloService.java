@@ -31,27 +31,20 @@
  *
  * Copyright version 2.0
  */
-package org.yiyi.ribbonconsumer;
+package org.yiyi.feignconsumer;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.client.RestTemplate;
 
 /**
  * @author yi.yi
- * @date 2020.01.07
+ * @date 2020.02.03
  */
-@RestController
-public class ConsumerController
+@FeignClient(value = "hello-service", fallback = HelloFallbackService.class)
+public interface IHelloService
 {
-    @Autowired
-    private HystrixService hystrixService;
+    @RequestMapping(value = "/hello", method = RequestMethod.GET)
+    String hello ();
 
-    @RequestMapping(value = "/sayHello", method = RequestMethod.GET)
-    public String sayHello ()
-    {
-        return hystrixService.sayHello ();
-    }
 }

@@ -4,11 +4,12 @@
     <modelVersion>4.0.0</modelVersion>
     <modules>
         <module>eureka-server</module>
-        <module>hello-server</module>
         <module>eureka-server-2</module>
         <module>hello-service-2</module>
         <module>hello-service</module>
         <module>ribbon-consumer</module>
+        <module>hello-service-api</module>
+        <module>feign-consumer</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>

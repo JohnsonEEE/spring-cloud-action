@@ -34,13 +34,10 @@
 package org.yiyi.hello;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.List;
 
 /**
  * @author yi.yi
@@ -55,9 +52,10 @@ public class HelloController
     @RequestMapping(value = "/hello", method = RequestMethod.GET)
     public String hello ()
     {
-        StringBuilder sb = new StringBuilder ();
-        List <ServiceInstance> instances = client.getInstances ("HELLO-SERVICE");
-        instances.forEach (i -> sb.append (i.getInstanceId ()).append (" from service 111"));
-        return sb.toString ();
+        throw new RuntimeException ("hhhh");
+//        StringBuilder sb = new StringBuilder ();
+//        List <ServiceInstance> instances = client.getInstances ("HELLO-SERVICE");
+//        instances.forEach (i -> sb.append (i.getInstanceId ()).append (" from service 111"));
+//        return sb.toString ();
     }
 }

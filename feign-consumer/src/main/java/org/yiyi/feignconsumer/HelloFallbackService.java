@@ -31,27 +31,21 @@
  *
  * Copyright version 2.0
  */
-package org.yiyi.ribbonconsumer;
+package org.yiyi.feignconsumer;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.client.RestTemplate;
+import org.springframework.stereotype.Service;
 
 /**
  * @author yi.yi
- * @date 2020.01.07
+ * @date 2020.02.03
  */
-@RestController
-public class ConsumerController
+@Service
+public class HelloFallbackService implements IHelloService
 {
-    @Autowired
-    private HystrixService hystrixService;
 
-    @RequestMapping(value = "/sayHello", method = RequestMethod.GET)
-    public String sayHello ()
+    @Override
+    public String hello ()
     {
-        return hystrixService.sayHello ();
+        return "feign fall back";
     }
 }
