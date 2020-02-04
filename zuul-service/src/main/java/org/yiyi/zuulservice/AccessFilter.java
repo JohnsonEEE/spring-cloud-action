@@ -31,26 +31,52 @@
  *
  * Copyright version 2.0
  */
-package org.yiyi.feignconsumer;
+package org.yiyi.zuulservice;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import com.netflix.zuul.ZuulFilter;
+import com.netflix.zuul.context.RequestContext;
+import com.netflix.zuul.exception.ZuulException;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author yi.yi
- * @date 2020.02.03
+ * @date 2020.02.04
  */
-@RestController
-public class FeignController
+public class AccessFilter extends ZuulFilter
 {
-    @Autowired
-    private IHelloService helloService;
 
-    @RequestMapping(value = "/sayHello", method = RequestMethod.GET)
-    public String sayHello ()
+    @Override
+    public String filterType ()
     {
-        return helloService.hello ();
+        return "pre";
+    }
+
+    @Override
+    public int filterOrder ()
+    {
+        return 0;
+    }
+
+    @Override
+    public boolean shouldFilter ()
+    {
+        return true;
+    }
+
+    @Override
+    public Object run () throws ZuulException
+    {
+        RequestContext ctx = RequestContext.getCurrentContext ();
+        HttpServletRequest request = ctx.getRequest ();
+        String token = request.getParameter ("token");
+        if (token == null)
+        {
+            ctx.setSendZuulResponse (false);
+            ctx.setResponseStatusCode (401);
+            ctx.setResponseBody ("no token was found! not authorized!");
+            return null;
+        }
+        return null;
     }
 }

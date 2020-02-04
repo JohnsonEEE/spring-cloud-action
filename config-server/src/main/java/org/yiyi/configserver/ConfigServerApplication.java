@@ -31,26 +31,22 @@
  *
  * Copyright version 2.0
  */
-package org.yiyi.feignconsumer;
+package org.yiyi.configserver;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.config.server.EnableConfigServer;
 
 /**
  * @author yi.yi
- * @date 2020.02.03
+ * @date 2020.02.04
  */
-@RestController
-public class FeignController
+@SpringBootApplication
+@EnableConfigServer
+public class ConfigServerApplication
 {
-    @Autowired
-    private IHelloService helloService;
-
-    @RequestMapping(value = "/sayHello", method = RequestMethod.GET)
-    public String sayHello ()
+    public static void main (String[] args)
     {
-        return helloService.hello ();
+        SpringApplication.run (ConfigServerApplication.class, args);
     }
 }
