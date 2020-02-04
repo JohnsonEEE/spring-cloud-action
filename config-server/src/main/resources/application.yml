@@ -1,5 +1,5 @@
 server:
-  port: 8769
+  port: 7001
 spring:
   application:
     name: config-service
@@ -8,6 +8,6 @@ spring:
       server:
         git:
           uri: https://github.com/JohnsonEEE/spring-cloud-action.git
-          search-paths: spring-cloud-action/config-repo
+          search-paths: config-repo
           username: 278013157@qq.com
           password: yiyijohnson11

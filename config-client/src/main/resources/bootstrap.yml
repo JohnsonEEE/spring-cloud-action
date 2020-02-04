@@ -1,0 +1,10 @@
+server:
+  port: 7002
+spring:
+  application:
+    name: config
+  cloud:
+    config:
+      uri: http://localhost:7001/
+      profile: dev
+      label: config-lable-test
