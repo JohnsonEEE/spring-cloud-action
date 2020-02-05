@@ -11,3 +11,7 @@ spring:
           search-paths: config-repo
           username: 278013157@qq.com
           password: yiyijohnson11
+eureka:
+  client:
+    service-url:
+      defaultZone: http://eureka-server-peer1:8761/eureka/,http://eureka-server-peer2:8762/eureka/

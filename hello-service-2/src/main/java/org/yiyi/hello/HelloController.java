@@ -34,6 +34,7 @@
 package org.yiyi.hello;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -52,12 +53,15 @@ public class HelloController
     @Autowired
     private DiscoveryClient client;
 
+    @Value ("${from}")
+    private String from;
+
     @RequestMapping(value = "/hello", method = RequestMethod.GET)
     public String hello ()
     {
         StringBuilder sb = new StringBuilder ();
         List <ServiceInstance> instances = client.getInstances ("HELLO-SERVICE");
-        instances.forEach (i -> sb.append (i.getInstanceId ()).append (" from service 222"));
+        instances.forEach (i -> sb.append (i.getInstanceId ()).append (" from service " + from));
         return sb.toString ();
     }
 }

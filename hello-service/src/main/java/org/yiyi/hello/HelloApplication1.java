@@ -36,17 +36,18 @@ package org.yiyi.hello;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 
 /**
  * @author yi.yi
  * @date 2020.01.07
  */
-@EnableDiscoveryClient
+@EnableEurekaClient
 @SpringBootApplication
-public class Application
+public class HelloApplication1
 {
     public static void main (String[] args)
     {
-        SpringApplication.run (Application.class, args);
+        SpringApplication.run (HelloApplication1.class, args);
     }
 }

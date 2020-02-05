@@ -1,20 +1,12 @@
-server:
-  port: 7002
 spring:
-  application:
-    name: config-client
   cloud:
     config:
       profile: dev
-      name: config
       label: master
+      name: config
       discovery:
         enabled: true
         service-id: config-service
-eureka:
-  client:
-    service-url:
-      defaultZone: http://eureka-server-peer1:8761/eureka/,http://eureka-server-peer2:8762/eureka/
 management:
   endpoints:
     web:

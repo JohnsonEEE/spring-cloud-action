@@ -34,7 +34,9 @@
 package org.yiyi.hello;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.client.discovery.DiscoveryClient;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -44,15 +46,19 @@ import org.springframework.web.bind.annotation.RestController;
  * @date 2020.01.07
  */
 @RestController
+@RefreshScope
 public class HelloController
 {
     @Autowired
     private DiscoveryClient client;
 
+    @Value ("${from}")
+    private String from;
+
     @RequestMapping(value = "/hello", method = RequestMethod.GET)
     public String hello ()
     {
-        throw new RuntimeException ("hhhh");
+        throw new RuntimeException ("hhhh" + from);
 //        StringBuilder sb = new StringBuilder ();
 //        List <ServiceInstance> instances = client.getInstances ("HELLO-SERVICE");
 //        instances.forEach (i -> sb.append (i.getInstanceId ()).append (" from service 111"));
