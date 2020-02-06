@@ -49,8 +49,9 @@ public class FeignController
     private IHelloService helloService;
 
     @RequestMapping(value = "/sayHello", method = RequestMethod.GET)
-    public String sayHello ()
+    public String sayHello () throws InterruptedException
     {
+        Thread.sleep (500L);
         return helloService.hello ();
     }
 }

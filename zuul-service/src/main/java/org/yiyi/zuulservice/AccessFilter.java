@@ -36,6 +36,8 @@ package org.yiyi.zuulservice;
 import com.netflix.zuul.ZuulFilter;
 import com.netflix.zuul.context.RequestContext;
 import com.netflix.zuul.exception.ZuulException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -45,6 +47,7 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class AccessFilter extends ZuulFilter
 {
+    private static final Logger s_logger = LoggerFactory.getLogger (AccessFilter.class);
 
     @Override
     public String filterType ()
@@ -67,15 +70,23 @@ public class AccessFilter extends ZuulFilter
     @Override
     public Object run () throws ZuulException
     {
-        RequestContext ctx = RequestContext.getCurrentContext ();
-        HttpServletRequest request = ctx.getRequest ();
-        String token = request.getParameter ("token");
-        if (token == null)
+        try
         {
-            ctx.setSendZuulResponse (false);
-            ctx.setResponseStatusCode (401);
-            ctx.setResponseBody ("no token was found! not authorized!");
-            return null;
+            RequestContext ctx = RequestContext.getCurrentContext ();
+            HttpServletRequest request = ctx.getRequest ();
+            String token = request.getParameter ("token");
+            Thread.sleep (600L);
+            if (token == null)
+            {
+                ctx.setSendZuulResponse (false);
+                ctx.setResponseStatusCode (401);
+                ctx.setResponseBody ("no token was found! not authorized!");
+                return null;
+            }
+        }
+        catch (InterruptedException e)
+        {
+            s_logger.error (e.getLocalizedMessage (), e);
         }
         return null;
     }

@@ -29,3 +29,4 @@ build/
 
 ### VS Code ###
 .vscode/
+/zipkin-server-2.11.13-exec.jar

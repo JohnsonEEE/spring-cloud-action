@@ -68,7 +68,7 @@ public class HelloController
     @RequestMapping(value = "/hello", method = RequestMethod.GET)
     public String hello ()
     {
-        StringBuilder sb = new StringBuilder ();
+        StringBuilder sb = new StringBuilder ("This is hello 2! \r\n");
         List <ServiceInstance> instances = client.getInstances ("HELLO-SERVICE");
         instances.forEach (i -> sb.append (i.getInstanceId ()).append (" from service " + from));
         return sb.toString ();

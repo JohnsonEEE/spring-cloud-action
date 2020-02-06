@@ -50,8 +50,9 @@ public class ConsumerController
     private HystrixService hystrixService;
 
     @RequestMapping(value = "/sayHello", method = RequestMethod.GET)
-    public String sayHello ()
+    public String sayHello () throws InterruptedException
     {
+        Thread.sleep (500L);
         return hystrixService.sayHello ();
     }
 }
