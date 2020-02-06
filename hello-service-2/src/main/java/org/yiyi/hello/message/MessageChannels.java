@@ -31,44 +31,24 @@
  *
  * Copyright version 2.0
  */
-package org.yiyi.hello;
+package org.yiyi.hello.message;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.cloud.client.discovery.DiscoveryClient;
-import org.springframework.cloud.context.config.annotation.RefreshScope;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.cloud.stream.annotation.Input;
+import org.springframework.cloud.stream.annotation.Output;
+import org.springframework.messaging.MessageChannel;
 
 /**
  * @author yi.yi
- * @date 2020.01.07
+ * @date 2020.02.06
  */
-@RestController
-@RefreshScope
-public class HelloController
+public interface MessageChannels
 {
-    @Autowired
-    private DiscoveryClient client;
+    public static final String HELLO_CHANNEL = "helloChannel";
+    public static final String HELLO_CALLBACK_CHANNEL = "helloCallbackChannel";
 
+    @Output (MessageChannels.HELLO_CHANNEL)
+    MessageChannel helloOutput ();
 
-    @Value ("${from}")
-    private String from;
-
-    @RequestMapping(value = "/hello", method = RequestMethod.GET)
-    public String hello ()
-    {
-        throw new RuntimeException ("hhhh" + from);
-//        StringBuilder sb = new StringBuilder ();
-//        List <ServiceInstance> instances = client.getInstances ("HELLO-SERVICE");
-//        instances.forEach (i -> sb.append (i.getInstanceId ()).append (" from service 111"));
-//        return sb.toString ();
-    }
-
-    @RequestMapping(value = "sendMsg", method = RequestMethod.GET)
-    public String sendMsg ()
-    {
-        return "send success";
-    }
+    @Input (MessageChannels.HELLO_CALLBACK_CHANNEL)
+    MessageChannel helloBackInput ();
 }

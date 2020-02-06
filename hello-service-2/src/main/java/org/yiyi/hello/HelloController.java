@@ -38,9 +38,12 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
+import org.springframework.cloud.stream.annotation.EnableBinding;
+import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import org.yiyi.hello.message.MessageChannels;
 
 import java.util.List;
 
@@ -50,10 +53,14 @@ import java.util.List;
  */
 @RestController
 @RefreshScope
+@EnableBinding(MessageChannels.class)
 public class HelloController
 {
     @Autowired
     private DiscoveryClient client;
+
+    @Autowired
+    private MessageChannels messageChannels;
 
     @Value ("${from}")
     private String from;
@@ -65,5 +72,12 @@ public class HelloController
         List <ServiceInstance> instances = client.getInstances ("HELLO-SERVICE");
         instances.forEach (i -> sb.append (i.getInstanceId ()).append (" from service " + from));
         return sb.toString ();
+    }
+
+    @RequestMapping(value = "sendMsg", method = RequestMethod.GET)
+    public String sendMsg ()
+    {
+        messageChannels.helloOutput ().send (MessageBuilder.withPayload ("from sinksender").build ());
+        return "send success";
     }
 }
