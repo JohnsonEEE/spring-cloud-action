@@ -12,6 +12,7 @@
         <module>zuul-service</module>
         <module>config-server</module>
         <module>config-client</module>
+        <module>hystrix-consumer</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
